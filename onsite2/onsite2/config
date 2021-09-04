@@ -1,0 +1,34 @@
+<VirtualHost *:80>
+    ServerName loadbalance.local
+	ServerAlias localhost 192.168.* 127.0.0.1
+	DocumentRoot /var/www/loadbalance
+
+	ProxyRequests Off
+
+	<Proxy balancer://mycluster1>
+		BalancerMember http://localhost:9000
+		BalancerMember http://localhost:9001
+	</Proxy>
+
+	ProxyPass /desktop.loadbalance.local balancer://mycluster1/
+	ProxyPassReverse /desktop.loadbalance.local balancer://mycluster1/
+
+	ProxyRequests Off
+	ProxyPreserveHost On
+
+	<Proxy balancer://mycluster>
+		BalancerMember http://localhost:9002
+		BalancerMember http://localhost:9003
+	</Proxy>
+
+	ProxyPass /mobile.loadbalance.local balancer://mycluster/
+	ProxyPassReverse /mobile.loadbalance.local balancer://mycluster/
+
+
+	ErrorLog ${APACHE_LOG_DIR}/proxy-error.log
+	CustomLog ${APACHE_LOG_DIR}/proxy-access.log combined
+
+
+
+
+</VirtualHost>

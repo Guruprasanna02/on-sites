@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+    desktop1:
+        build: 
+            context: .
+        ports: 
+            - 9000:80
+        volumes: 
+            - ./src2:/var/www/html
+    desktop2:
+        build: 
+            context: .
+        ports: 
+            - 9001:80
+        volumes: 
+            - ./src2:/var/www/html
+    mobile1:
+        build: 
+            context: .
+        ports: 
+            - 9002:80
+        volumes: 
+            - ./src1:/var/www/html
+    mobile2:
+        build: 
+            context: .
+        ports: 
+            - 9003:80
+        volumes: 
+            - ./src1:/var/www/html
