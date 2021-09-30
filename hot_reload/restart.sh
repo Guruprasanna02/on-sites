@@ -39,8 +39,7 @@ do
         then    
             echo "Change detected, Restarting docker container..."
             cd login.local
-            docker-compose build
-            docker-compose up -d
+            docker-compose up --build -d
             cd ..
             unset lastMod
             for ((j=0; j<${#files[@]}; j++))
